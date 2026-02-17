@@ -673,13 +673,13 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        DOCKER_IMAGE = "kastrov/ecommerce:latest"
+        DOCKER_IMAGE = "kishoreedigi/ecommerce:latest"
     }
 
     stages {
         stage('Git Checkout') {
             steps {
-                git 'https://github.com/KastroVKiran/Ecommerce-App-Kastro.git'
+                git 'https://github.com/kishorenandae/Ecommerce-App-Kastro.git'
             }
         }
 
@@ -767,7 +767,7 @@ pipeline {
         // ✅ These two stages were outside of "stages" block before. Moved inside.
         stage('Deploy To Kubernetes') {
             steps {
-                withKubeConfig(caCertificate: '', clusterName: 'kastro-eks', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://A3A38B4561B8159534054B870C447E05.yl4.us-east-1.eks.amazonaws.com') {
+                withKubeConfig(caCertificate: '', clusterName: 'kishore-eks', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://537AB861FAB0799E13D55A6E4266C8C7.gr7.us-east-1.eks.amazonaws.com') {
                     sh "kubectl apply -f deployment-service.yaml -n webapps"
                 }
             }
@@ -775,7 +775,7 @@ pipeline {
 
         stage('Verify the Deployment') {
             steps {
-                withKubeConfig(caCertificate: '', clusterName: 'kastro-eks', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://A3A38B4561B8159534054B870C447E05.yl4.us-east-1.eks.amazonaws.com') {
+                withKubeConfig(caCertificate: '', clusterName: 'kishore-eks', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://537AB861FAB0799E13D55A6E4266C8C7.gr7.us-east-1.eks.amazonaws.com') {
                     sh "kubectl get pods -n webapps"
                     sh "kubectl get svc -n webapps"
                 }
@@ -808,7 +808,7 @@ pipeline {
                 emailext (
                     subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus.toUpperCase()}",
                     body: body,
-                    to: 'kastrokiran@gmail.com',
+                    to: 'kishoreedigi@gmail.com',
                     from: 'jenkins@example.com',
                     replyTo: 'jenkins@example.com',
                     mimeType: 'text/html',
@@ -822,4 +822,5 @@ pipeline {
 
 To access the App, we need to get the Load Balancer URL
 kuetl get all -n webapps
+
 
